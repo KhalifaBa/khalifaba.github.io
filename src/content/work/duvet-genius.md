@@ -22,5 +22,5 @@ Pour ce faire, j'ai développé un système de catégorisation sophistiqué pren
 L'objectif était de fournir à l'utilisateur des recommandations personnalisées qui optimisent les performances du serveur tout en respectant ses exigences et contraintes particulières.
 
 ## Le projet en quelques images
-![alt text](/public/assets/chrome_PTM2JfPThY.png)
-![alt text](/public/assets/chrome_bYC75XrqqA.png)
+![alt text](/assets/chrome_PTM2JfPThY.png)
+![alt text](/assets/chrome_bYC75XrqqA.png)
