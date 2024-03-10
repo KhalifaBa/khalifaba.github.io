@@ -21,10 +21,10 @@ Cette expérience m'a permis d'approfondir mes compétences techniques, de contr
 
 
 ## Le projet en quelques images
-![alt text](/assets/chrome_NI3Hq2cZyg.png)
-![alt text](/assets/chrome_00Sw5lTZ8p.png)
-![alt text](/assets/chrome_Xg12GHc0mN.png)
-![alt text](/assets/chrome_aGSOj1nU1x.png)
-![alt text](/assets/chrome_6iNxfCEEeg.png)
-![alt text](/assets/chrome_4eUXH5Ceur.png)
-![alt text](/assets/chrome_bBFMlii2SW.png)
+<img src="/assets/chrome_NI3Hq2cZyg.png">
+<img src="/assets/chrome_00Sw5lTZ8p.png">
+<img src="/assets/chrome_Xg12GHc0mN.png">
+<img src="/assets/chrome_aGSOj1nU1x.png">
+<img src="/assets/chrome_6iNxfCEEeg.png">
+<img src="/assets/chrome_4eUXH5Ceur.png">
+<img src="/assets/chrome_bBFMlii2SW.png">
