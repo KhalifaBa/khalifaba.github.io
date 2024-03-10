@@ -1,35 +1,27 @@
 ---
-title: Markdown Mystery Tour
-publishDate: 2020-03-02 00:00:00
+title: HelpORT
+publishDate: 2025-03-02 00:00:00
 img: /assets/stock-1.jpg
 img_alt: Iridescent ripples of a bright blue and pink liquid
 description: |
-  We designed a whodunnit-style game to introduce Markdown formatting. Suspense — suspicion — syntax!
+  
 tags:
-  - Design
+  - PHP
+  - Java
   - Dev
-  - User Testing
+  - BDD
+  - Symfony
 ---
 
-## Level-two heading
 
-> Tell me and I forget. Teach me and I remember. Involve me and I learn.
+## Présentation
 
-Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl condimentum id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare.
 
-Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel quam elementum pulvinar etiam non.
+Notre équipe a relevé le défi de concevoir une application de soutien scolaire répondant aux exigences spécifiques du Conseiller Principal d'éducation, avec un accent particulier sur la gestion des niveaux entre les élèves. L'idée était de favoriser un environnement d'apprentissage collaboratif tout en respectant les contraintes de différenciation des niveaux académiques.
 
-### Level-three heading
+Le développement de l'application s'est articulé autour de deux principales technologies : Java a été utilisé pour la création de la partie client lourd, offrant ainsi une expérience utilisateur fluide et réactive. Symfony, quant à lui, a été le choix optimal pour le développement de l'application web, offrant une structure robuste et une flexibilité nécessaire pour répondre aux besoins évolutifs du projet.
 
-Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra. Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl pretium fusce.
+Au-delà de la gestion des niveaux, l'application a été conçue pour faciliter l'interaction entre les élèves, favorisant le partage de connaissances et l'entraide. Des fonctionnalités telles que des forums de discussion, des salles de tutorat virtuelles, et des outils de partage de ressources éducatives ont été intégrées pour enrichir l'expérience d'apprentissage collaborative.
 
-### Level-three heading
-
-Sed pulvinar porttitor mi in ultricies. Etiam non dolor gravida eros pulvinar pellentesque et dictum ex. Proin eu ornare ligula, sed condimentum dui. Vivamus tincidunt tellus mi, sed semper ipsum pharetra a. Suspendisse sollicitudin at sapien nec volutpat. Etiam justo urna, laoreet ac lacus sed, ultricies facilisis dolor. Integer posuere, metus vel viverra gravida, risus elit ornare magna, id feugiat erat risus ullamcorper libero. Proin vitae diam auctor, laoreet lorem vitae, varius tellus.
-
-Aenean pretium purus augue, ut bibendum erat convallis quis. Cras condimentum quis velit ac mollis. Suspendisse non purus fringilla, venenatis nisl porta, finibus odio. Curabitur aliquet metus faucibus libero interdum euismod. Morbi sed magna nisl. Morbi odio nibh, facilisis vel sapien eu, tempus tincidunt erat. Nullam erat velit, sagittis at purus quis, tristique scelerisque tortor. Pellentesque lacinia tortor id est aliquam viverra. Vestibulum et diam ac ipsum mollis fringilla.
-
-#### Level-four heading
-
-- We noted this
-- And also this other point
+Le processus de développement a également impliqué des phases de test approfondies pour garantir la stabilité, la sécurité et la convivialité de l'application. Notre collaboration au sein de l'équipe a été cruciale pour surmonter les défis techniques et assurer la livraison d'une solution conforme aux attentes du Conseiller Principal d'éducation. Ce projet a non seulement renforcé nos compétences en développement logiciel, mais il a également contribué de manière significative à l'amélioration du support éducatif au sein de l'établissement.
+## Le projet en quelques images
