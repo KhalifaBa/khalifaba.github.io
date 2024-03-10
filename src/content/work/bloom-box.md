@@ -29,6 +29,6 @@ En outre, j'ai eu l'opportunité de travailler en étroite collaboration avec l'
 
 En résumé, mon rôle dans le développement du comparateur d'assurance m'a offert une expérience enrichissante dans la manipulation d'API, le traitement des données et la collaboration avec des partenaires externes pour atteindre les objectifs du projet.
 ## Le projet en quelques images
-![alt text](/public/assets/chrome_fYf8E2oU3j.png)
-![alt text](/public/assets/Postman_a4sMTrE9cY.png)
-![alt text](/public/assets/Postman_AKts2Ha6Ar.png)
+![alt text](/assets/chrome_fYf8E2oU3j.png)
+![alt text](/assets/Postman_a4sMTrE9cY.png)
+![alt text](/assets/Postman_AKts2Ha6Ar.png)
