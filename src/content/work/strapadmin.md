@@ -12,7 +12,7 @@ tags:
 - Paypal
 ---
 
-
+[![Ouvrir sur GitHub](https://github.com/codespaces/badge.svg)](https://github.com/KhalifaBa/Strapadmin)
 ## Présentation
 
 Bien que ce projet ait été conçu comme un test, il m'a permis de mettre en place un système de formules pour catégoriser les offres d'assurance. 
