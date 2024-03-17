@@ -1,7 +1,7 @@
 ---
 title: HelpORT
 publishDate: 2025-03-02 00:00:00
-img: /assets/stock-1.jpg
+img: /assets/image3.png
 img_alt: Iridescent ripples of a bright blue and pink liquid
 description: |
   
@@ -25,3 +25,8 @@ Au-delà de la gestion des niveaux, l'application a été conçue pour faciliter
 
 Le processus de développement a également impliqué des phases de test approfondies pour garantir la stabilité, la sécurité et la convivialité de l'application. Notre collaboration au sein de l'équipe a été cruciale pour surmonter les défis techniques et assurer la livraison d'une solution conforme aux attentes du Conseiller Principal d'éducation. Ce projet a non seulement renforcé nos compétences en développement logiciel, mais il a également contribué de manière significative à l'amélioration du support éducatif au sein de l'établissement.
 ## Le projet en quelques images
+<img src="/assets/image4.png">
+<img src="/assets/image5.png">
+<img src="/assets/image6.png">
+<img src="/assets/image2.png">
+<img src="/assets/image3.png">

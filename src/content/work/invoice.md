@@ -3,7 +3,7 @@ title: InvoicePlane
 publishDate: 2023-03-02 00:00:00
 img: /assets/DhPy7FcXkAAu3fe.jpg
 img_alt: Iridescent ripples of a bright blue and pink liquid
-description: |
+description: | 
   
 tags:
   - PHP
@@ -12,7 +12,7 @@ tags:
   - BDD
 ---
 
-
+[![Ouvrir sur GitHub](https://github.com/codespaces/badge.svg)](https://github.com/KhalifaBa/invoices)
 ## Présentation
 
 Pendant ce stage, j'ai développé une application web permettant aux clients de consulter et payer leurs factures. J'ai utilisé InvoicePlane, une application open source, et personnalisé son interface. 
