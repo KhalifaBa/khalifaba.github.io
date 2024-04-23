@@ -1,6 +1,6 @@
 ---
 title: Loc'A Car
-publishDate: 2025-03-02 00:00:00
+publishDate: 2028-03-02 00:00:00
 img: /assets/chrome_jk9bKMYpEV.png
 img_alt: Iridescent ripples of a bright blue and pink liquid
 description: |
