@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Khalifa LO, développeur PrestaShop freelance en Île-de-France : correction de bugs, modules sur mesure, flux marketplace. Prix fixe annoncé avant.">
+<title>Khalifa LO PrestaShop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: a single plain reading column, like a personal page. One green accent, borrowed from the module's shipping bar. */
+:root{
+  --bg:#FFFFFF; --ink:#1B1F1D; --muted:#5D6661; --line:#E3E7E4; --soft:#F4F7F5;
+  --green:#1F8A4C; --green-soft:#E3F2E9; --track:#E6EBE8;
+  --sans:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121514; --ink:#E7ECE9; --muted:#9AA49F; --line:#2A302D; --soft:#1A1F1C;
+  --green:#4CC27E; --green-soft:#183324; --track:#2A332E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121514; --ink:#E7ECE9; --muted:#9AA49F; --line:#2A302D; --soft:#1A1F1C;
+  --green:#4CC27E; --green-soft:#183324; --track:#2A332E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:720px;margin:0 auto;padding-block:40px 32px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+h1{font-size:1.9rem;font-weight:700}
+h2{font-size:1.3rem;font-weight:700}
+h3{font-size:1rem;font-weight:600}
+p{margin:0}
+a{color:var(--green)}
+.muted{color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+header{display:flex;flex-direction:column;gap:6px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+header .role{color:var(--muted)}
+
+.intro{display:flex;flex-direction:column;gap:14px}
+
+/* tarifs */
+.prices{border-top:1px solid var(--line)}
+.price-row{display:grid;grid-template-columns:1fr auto;gap:4px 24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.price-row p{grid-column:1;color:var(--muted);font-size:.95rem}
+.price-row .amount{grid-row:1 / span 2;grid-column:2;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.price-row .amount small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+
+/* démo */
+.demo{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.demo-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 14px;background:var(--soft);border-bottom:1px solid var(--line);font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.demo-top code{font-family:var(--mono);font-size:.78rem}
+.fsb{padding:12px 16px;text-align:center;background:var(--soft);border-bottom:1px solid var(--line)}
+.fsb-msg{font-weight:600;font-size:.95rem;margin-bottom:6px}
+.fsb.is-reached .fsb-msg{color:var(--green)}
+.fsb-track{max-width:380px;height:6px;margin:0 auto;background:var(--track);border-radius:3px;overflow:hidden}
+.fsb-fill{height:100%;background:var(--green);transition:width .35s ease}
+.shop{display:flex;flex-direction:column}
+.item{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:16px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item .name{min-width:0}
+.item .unit{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:32px;height:32px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:4px;font-size:1rem;cursor:pointer;font-family:var(--sans)}
+.qty button:hover{border-color:var(--green)}
+.qty output{min-width:1.2em;text-align:center;font-variant-numeric:tabular-nums}
+.total{display:flex;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--line);font-weight:600;font-variant-numeric:tabular-nums}
+.demo-note{font-size:.92rem;color:var(--muted)}
+.demo-controls{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);font-size:.92rem}
+.demo-controls select{font-family:var(--sans);font-size:.92rem;padding:5px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.demo-controls .check{display:flex;align-items:center;gap:6px}
+.demo-pre{margin:0;padding:14px 16px;font-family:var(--mono);font-size:.78rem;line-height:1.6;overflow-x:auto;background:var(--bg);color:var(--ink);white-space:pre}
+
+/* parcours */
+.facts{display:grid;grid-template-columns:150px 1fr;gap:10px 20px;margin:0}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+
+/* contact */
+.contact-lines{display:flex;flex-direction:column;gap:8px}
+.cline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cline .v{font-weight:600;user-select:all;word-break:break-all}
+.copy{font-family:var(--sans);font-size:.82rem;background:transparent;border:1px solid var(--line);color:var(--muted);padding:3px 10px;border-radius:4px;cursor:pointer}
+.copy.done{color:var(--green);border-color:var(--green)}
+
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+
+@media (max-width:560px){
+  .facts{grid-template-columns:1fr;gap:2px}
+  .facts dd{margin-bottom:10px}
+  .item{grid-template-columns:1fr auto;gap:6px 12px}
+  .item .unit{grid-column:1;grid-row:2}
+  .qty{grid-column:2;grid-row:1 / span 2}
+}
+@media (prefers-reduced-motion:reduce){.fsb-fill{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Khalifa LO</h1>
+    <p class="role">Développeur PrestaShop freelance · Aulnay-sous-Bois (93)</p>
+  </header>
+
+  <section class="intro">
+    <p>Bonjour, je suis Khalifa. Je suis développeur web depuis deux ans, et je travaille tous les jours sur une boutique PrestaShop 9 multiboutique.</p>
+    <p>En freelance, j'aide les e-commerçants et les agences web sur leurs boutiques PrestaShop : corriger un bug, ajouter une fonction, connecter le catalogue à une marketplace.</p>
+    <p>Je donne toujours un prix fixe avant de commencer, et je réponds par mail sous 24 h.</p>
+  </section>
+
+  <section>
+    <h2>Tarifs</h2>
+    <div class="prices">
+      <div class="price-row">
+        <h3>Check-up de votre boutique</h3>
+        <p>Je vérifie 10 points : version, modules, erreurs, vitesse, sécurité, paiement. Vous recevez un rapport clair avec les priorités. Déduit si vous me confiez la correction.</p>
+        <div class="amount">49 €<small>sous 48 h</small></div>
+      </div>
+      <div class="price-row">
+        <h3>Correction d'un bug</h3>
+        <p>Un module cassé, une erreur après une mise à jour, une page qui ne s'affiche plus.</p>
+        <div class="amount">dès 150 €<small>sous 72 h</small></div>
+      </div>
+      <div class="price-row">
+        <h3>Nouvelle fonction ou petit module</h3>
+        <p>Import de produits, champ personnalisé, module sur mesure comme ceux plus bas.</p>
+        <div class="amount">dès 600 €<small>1 à 2 semaines</small></div>
+      </div>
+      <div class="price-row">
+        <h3>Connexion à une marketplace</h3>
+        <p>Envoi automatique du catalogue vers Leboncoin ou une autre plateforme.</p>
+        <div class="amount">dès 1 200 €<small>2 à 3 semaines</small></div>
+      </div>
+      <div class="price-row">
+        <h3>Agences : renfort en régie</h3>
+        <p>Je travaille en sous-traitance, en marque blanche, sur vos projets PrestaShop.</p>
+        <div class="amount">300 € / jour<small>soir et week-end</small></div>
+      </div>
+    </div>
+    <p class="muted">Le prix exact est fixé après un court échange, selon la taille du besoin. Vous le connaissez avant que je commence.</p>
+  </section>
+
+  <section>
+    <h2>Modules que j'ai développés</h2>
+    <p>Trois modules pour PrestaShop 8 et 9. Chaque démo ci-dessous reproduit ce que fait le module, vous pouvez la manipuler.</p>
+    <p><a href="demo/">Voir les 3 modules en situation, dans une boutique de démo →</a></p>
+  </section>
+
+  <section>
+    <h2>1. Barre livraison gratuite</h2>
+    <p>Elle montre au client combien il lui reste à dépenser pour avoir la livraison offerte. C'est un petit coup de pouce qui augmente souvent le panier moyen.</p>
+    <p>Essayez : ajoutez ou retirez des produits.</p>
+
+    <div class="demo" aria-label="Démonstration du module">
+      <div class="demo-top"><span>Démo · livraison offerte dès 50 €</span><code>kl_freeshippingbar v1.0.0</code></div>
+      <div class="fsb" id="fsb">
+        <p class="fsb-msg" id="fsb-msg" aria-live="polite">Plus que 35,10 € pour la livraison offerte</p>
+        <div class="fsb-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" id="fsb-track"><div class="fsb-fill" id="fsb-fill" style="width:30%"></div></div>
+      </div>
+      <div class="shop" id="shop"></div>
+      <div class="total"><span>Total produits</span><span id="total">14,90 €</span></div>
+    </div>
+    <p class="demo-note">Dans la vraie boutique, la barre apparaît en haut des pages et dans le panier. Le seuil et les messages se règlent dans le back-office.</p>
+  </section>
+
+  <section>
+    <h2>2. Export des commandes en CSV</h2>
+    <p>Un bouton dans le back-office pour sortir les commandes d'une période dans un fichier qui s'ouvre directement dans Excel. Pratique pour la compta.</p>
+    <p>Essayez : changez le statut, le fichier se met à jour.</p>
+    <div class="demo" aria-label="Démonstration de l'export CSV">
+      <div class="demo-top"><span>Démo · commandes d'octobre 2026</span><code>kl_orderexport v1.0.0</code></div>
+      <div class="demo-controls">
+        <label for="exp-state">Statut</label>
+        <select id="exp-state">
+          <option value="">Tous les statuts</option>
+          <option>Livré</option>
+          <option>Expédié</option>
+          <option>Paiement accepté</option>
+        </select>
+        <span class="muted" id="exp-count"></span>
+      </div>
+      <pre class="demo-pre" id="exp-out"></pre>
+    </div>
+    <p class="demo-note">Séparateur point-virgule et virgule décimale : Excel en français l'ouvre sans réglage. Données de la démo fictives.</p>
+  </section>
+
+  <section>
+    <h2>3. Flux produits XML</h2>
+    <p>Une adresse web qui liste tous vos produits au format XML. Vous la donnez à une marketplace ou un comparateur de prix, et votre catalogue se met à jour chez eux tout seul.</p>
+    <p>Essayez : choisissez un produit.</p>
+    <div class="demo" aria-label="Démonstration du flux XML">
+      <div class="demo-top"><span>Démo · une ligne du flux</span><code>kl_productfeed v1.0.0</code></div>
+      <div class="demo-controls">
+        <label for="feed-product">Produit</label>
+        <select id="feed-product">
+          <option value="0">Mug en céramique</option>
+          <option value="1">Carnet A5 ligné</option>
+          <option value="2">Tote bag en coton</option>
+        </select>
+        <label class="check"><input type="checkbox" id="feed-stock" checked> Seulement en stock</label>
+      </div>
+      <pre class="demo-pre" id="feed-out"></pre>
+    </div>
+    <p class="demo-note">L'adresse du flux est protégée par une clé secrète. Sans elle, le flux refuse de s'afficher.</p>
+  </section>
+
+  <section>
+    <h2>Parcours</h2>
+    <dl class="facts">
+      <dt>Expérience</dt><dd>2 ans dans une PME, d'abord en alternance puis en CDI. Seul développeur de l'équipe.</dd>
+      <dt>Formation</dt><dd>Bachelor Développement Fullstack &amp; DevOps, IPSSI</dd>
+      <dt>Outils</dt><dd>PrestaShop, PHP, Symfony, React, React Native, Node.js, Docker, GitLab CI/CD</dd>
+    </dl>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Écrivez-moi votre besoin en quelques lignes. Je réponds par mail sous 24 h, avec un prix.</p>
+    <div class="contact-lines">
+      <div class="cline"><a class="v" id="mail" href="mailto:khalifalo178@gmail.com">khalifalo178@gmail.com</a><button class="copy" type="button" id="copy-mail" data-target="mail">Copier</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Khalifa LO, entrepreneur individuel</span>
+    <span>SIRET 993 754 191 00019</span>
+    <span>Hébergement : GitHub Pages, GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var THRESHOLD = 50;
+  var products = [
+    {id:'mug', name:'Mug en céramique', price:14.90, qty:1},
+    {id:'carnet', name:'Carnet A5 ligné', price:9.50, qty:0},
+    {id:'tote', name:'Tote bag en coton', price:19.00, qty:0}
+  ];
+  var fmt = new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'});
+  var shop = document.getElementById('shop');
+
+  products.forEach(function(p){
+    var row = document.createElement('div');
+    row.className = 'item';
+    row.innerHTML =
+      '<div class="name">'+p.name+'</div>'+
+      '<div class="unit">'+fmt.format(p.price)+'</div>'+
+      '<div class="qty">'+
+        '<button type="button" id="minus-'+p.id+'" aria-label="Retirer '+p.name+'">−</button>'+
+        '<output id="qty-'+p.id+'">'+p.qty+'</output>'+
+        '<button type="button" id="plus-'+p.id+'" aria-label="Ajouter '+p.name+'">+</button>'+
+      '</div>';
+    shop.appendChild(row);
+    row.querySelector('#minus-'+p.id).addEventListener('click',function(){ if(p.qty>0){p.qty--; render();} });
+    row.querySelector('#plus-'+p.id).addEventListener('click',function(){ if(p.qty<9){p.qty++; render();} });
+  });
+
+  function render(){
+    var total = products.reduce(function(s,p){return s + p.price*p.qty;},0);
+    var remaining = Math.max(0, THRESHOLD - total);
+    var percent = Math.min(100, Math.round(total/THRESHOLD*100));
+    var reached = remaining <= 0;
+    products.forEach(function(p){ document.getElementById('qty-'+p.id).textContent = p.qty; });
+    document.getElementById('total').textContent = fmt.format(total);
+    document.getElementById('fsb-msg').textContent = reached
+      ? 'Bravo, la livraison est offerte !'
+      : 'Plus que ' + fmt.format(remaining) + ' pour la livraison offerte';
+    document.getElementById('fsb-fill').style.width = percent + '%';
+    document.getElementById('fsb-track').setAttribute('aria-valuenow', percent);
+    document.getElementById('fsb').classList.toggle('is-reached', reached);
+  }
+  render();
+
+  /* Démo 2 : export CSV */
+  var orders = [
+    ['XKBKNABJK','27/10/2026 18:42','Marie Durand','marie.durand@exemple.fr',64.90,'Carte bancaire','Livré'],
+    ['FFATNOMMJ','25/10/2026 10:15','Karim Benali','k.benali@exemple.fr',29.40,'PayPal','Expédié'],
+    ['UOYEVOLIL','21/10/2026 21:03','Sophie Martin','sophie.m@exemple.fr',112.00,'Carte bancaire','Livré'],
+    ['ZQHDKRSPA','19/10/2026 14:27','Lucas Petit','lucas.petit@exemple.fr',47.80,'Virement','Paiement accepté'],
+    ['MRTWLCNEB','12/10/2026 09:51','Aïcha Diallo','aicha.d@exemple.fr',19.00,'Carte bancaire','Livré']
+  ];
+  var expState = document.getElementById('exp-state');
+  function renderCsv(){
+    var st = expState.value;
+    var rows = orders.filter(function(o){ return !st || o[6] === st; });
+    var lines = ['Référence;Date;Client;Email;Total TTC;Devise;Paiement;Statut'];
+    rows.forEach(function(o){
+      lines.push([o[0],o[1],o[2],o[3],o[4].toFixed(2).replace('.',','),'EUR',o[5],o[6]].join(';'));
+    });
+    document.getElementById('exp-out').textContent = lines.join('\n');
+    document.getElementById('exp-count').textContent = rows.length + (rows.length > 1 ? ' commandes' : ' commande');
+  }
+  expState.addEventListener('change', renderCsv);
+  renderCsv();
+
+  /* Démo 3 : flux XML */
+  var feed = [
+    {id:12, ref:'MUG-CER-01', ean:'3760123456789', title:'Mug en céramique', desc:'Mug 33 cl, passe au lave-vaisselle.', price:14.90, qty:37, brand:'Atelier Nord', cat:'Cuisine', slug:'mug-ceramique', img:34},
+    {id:18, ref:'CAR-A5-LN', ean:'3760123456796', title:'Carnet A5 ligné', desc:'96 pages, papier 90 g, couverture lin.', price:9.50, qty:0, brand:'Atelier Nord', cat:'Papeterie', slug:'carnet-a5-ligne', img:51},
+    {id:23, ref:'TOTE-COT-N', ean:'3760123456802', title:'Tote bag en coton', desc:'Coton bio 280 g, anses longues.', price:19.00, qty:12, brand:'Atelier Nord', cat:'Accessoires', slug:'tote-bag-coton', img:66}
+  ];
+  var feedSel = document.getElementById('feed-product'), feedStock = document.getElementById('feed-stock');
+  function renderXml(){
+    var p = feed[+feedSel.value], out;
+    if (feedStock.checked && p.qty <= 0) {
+      out = '<!-- Produit ' + p.id + ' exclu du flux : stock à 0 -->';
+    } else {
+      out = [
+        '<product>',
+        '  <id>' + p.id + '</id>',
+        '  <reference>' + p.ref + '</reference>',
+        '  <ean13>' + p.ean + '</ean13>',
+        '  <title><![CDATA[' + p.title + ']]></title>',
+        '  <description><![CDATA[' + p.desc + ']]></description>',
+        '  <price>' + p.price.toFixed(2) + '</price>',
+        '  <currency>EUR</currency>',
+        '  <quantity>' + p.qty + '</quantity>',
+        '  <brand>' + p.brand + '</brand>',
+        '  <category>' + p.cat + '</category>',
+        '  <url>https://atelier-nord.example/' + p.id + '-' + p.slug + '.html</url>',
+        '  <image>https://atelier-nord.example/' + p.img + '-large_default/' + p.slug + '.jpg</image>',
+        '</product>'
+      ].join('\n');
+    }
+    document.getElementById('feed-out').textContent = out;
+  }
+  feedSel.addEventListener('change', renderXml);
+  feedStock.addEventListener('change', renderXml);
+  renderXml();
+
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.dataset.target), t=el.textContent.trim();
+      function done(){b.textContent='Copié';b.classList.add('done');setTimeout(function(){b.textContent='Copier';b.classList.remove('done');},1600);}
+      function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Sélectionné';}
+      try{navigator.clipboard.writeText(t).then(done,fallback);}catch(e){fallback();}
+    });
+  });
+})();
+</script>
+</body>
+</html>

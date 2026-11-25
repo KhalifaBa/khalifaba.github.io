@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Boutique de démonstration fictive : trois modules PrestaShop en action, côté client et back-office.">
+<title>Atelier Nord Démo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: a small classic e-commerce storefront (header, free-shipping banner, product grid, cart) plus a back-office view, switched by hash. */
+:root{
+  --bg:#FFFFFF; --ink:#232826; --muted:#69726D; --line:#E4E8E5; --soft:#F5F7F6;
+  --brand:#2F5D50; --brand-ink:#FFFFFF; --green:#1F8A4C; --track:#E6EBE8;
+  --admin:#F0F2F5; --admin-side:#25303A; --admin-side-ink:#C9D2DA;
+  --demo:#FFF4D6; --demo-ink:#6B5200;
+  --sans:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#131615; --ink:#E6EBE8; --muted:#9AA49F; --line:#2B312E; --soft:#1A1E1C;
+  --brand:#7FB8A6; --brand-ink:#0F1211; --green:#4CC27E; --track:#2A332E;
+  --admin:#171B1F; --admin-side:#0E1216; --admin-side-ink:#AEB8C1;
+  --demo:#3A3016; --demo-ink:#F1D98A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131615; --ink:#E6EBE8; --muted:#9AA49F; --line:#2B312E; --soft:#1A1E1C;
+  --brand:#7FB8A6; --brand-ink:#0F1211; --green:#4CC27E; --track:#2A332E;
+  --admin:#171B1F; --admin-side:#0E1216; --admin-side-ink:#AEB8C1;
+  --demo:#3A3016; --demo-ink:#F1D98A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
+.pad{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.inner{max-width:1080px;margin:0 auto}
+a{color:inherit}
+button{font-family:var(--sans)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.demo-strip{background:var(--demo);color:var(--demo-ink);font-size:.85rem;padding-block:8px}
+.demo-strip .inner{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
+.demo-strip a{font-weight:600}
+
+.fsb{background:var(--soft);border-bottom:1px solid var(--line);padding-block:10px;text-align:center}
+.fsb-msg{font-weight:600;font-size:.92rem;margin:0 0 6px}
+.fsb.is-reached .fsb-msg{color:var(--green)}
+.fsb-track{max-width:380px;height:6px;margin:0 auto;background:var(--track);border-radius:3px;overflow:hidden}
+.fsb-fill{height:100%;background:var(--green);transition:width .35s ease}
+
+.top{border-bottom:1px solid var(--line);padding-block:16px}
+.top .inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.25rem;letter-spacing:.02em;text-decoration:none}
+.logo span{color:var(--brand)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{text-decoration:none;padding:7px 12px;border-radius:4px;font-weight:500;font-size:.92rem;color:var(--muted)}
+.nav a[aria-current="page"]{background:var(--soft);color:var(--ink)}
+.cart-count{display:inline-block;min-width:20px;padding:0 6px;margin-left:4px;border-radius:10px;background:var(--brand);color:var(--brand-ink);font-size:.78rem;text-align:center}
+
+main{padding-block:28px 48px}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+h1{font-size:1.5rem}
+h2{font-size:1.15rem}
+.muted{color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+.card{display:flex;flex-direction:column;gap:8px;min-width:0}
+.thumb{aspect-ratio:1/1;max-width:100%;border-radius:4px;display:flex;align-items:flex-end;padding:12px;font-size:.75rem;color:rgba(255,255,255,.9);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.card .price{font-weight:700;font-variant-numeric:tabular-nums}
+.stock{font-size:.82rem}
+.stock.out{color:#B24A3B}
+.add{margin-top:auto;padding:9px 12px;border:0;border-radius:4px;background:var(--brand);color:var(--brand-ink);font-weight:600;cursor:pointer}
+.add:disabled{opacity:.45;cursor:not-allowed}
+
+.cart-layout{display:grid;grid-template-columns:1fr 300px;gap:28px;margin-top:20px;align-items:start}
+.cart-fsb{border:1px solid var(--line);border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:16px}
+.cart-fsb.is-reached .fsb-msg{color:var(--green)}
+.line{display:grid;grid-template-columns:56px 1fr auto auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.line .mini{width:56px;height:56px;border-radius:4px}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:30px;height:30px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:4px;cursor:pointer}
+.qty output{min-width:1.2em;text-align:center;font-variant-numeric:tabular-nums}
+.line .sub{font-weight:600;font-variant-numeric:tabular-nums;min-width:72px;text-align:right}
+.summary{background:var(--soft);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.summary .row{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.summary .total{font-weight:700;font-size:1.05rem;border-top:1px solid var(--line);padding-top:8px}
+.free{color:var(--green);font-weight:600}
+.empty{padding:28px 0}
+
+/* back-office */
+.admin{display:grid;grid-template-columns:200px 1fr;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:20px}
+.side{background:var(--admin-side);color:var(--admin-side-ink);padding:16px 0;display:flex;flex-direction:column;font-size:.88rem}
+.side b{padding:0 16px 12px;color:#fff;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.side button{background:transparent;border:0;color:inherit;text-align:left;padding:9px 16px;cursor:pointer;font-size:.88rem}
+.side button[aria-pressed="true"]{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 3px 0 0 var(--brand)}
+.panel{background:var(--admin);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.form-row{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;font-size:.9rem}
+.form-row label{min-width:130px;color:var(--muted)}
+.form-row input,.form-row select{font-family:var(--sans);font-size:.9rem;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.btn{align-self:flex-start;padding:8px 14px;border:0;border-radius:4px;background:var(--brand);color:var(--brand-ink);font-weight:600;cursor:pointer}
+.alert{padding:10px 12px;border-radius:4px;background:var(--soft);font-size:.88rem;word-break:break-all}
+.alert code{font-family:var(--mono);font-size:.8rem}
+pre{margin:0;padding:12px;font-family:var(--mono);font-size:.76rem;line-height:1.6;overflow-x:auto;background:var(--soft);border-radius:4px;white-space:pre}
+.ok{color:var(--green);font-size:.88rem;font-weight:600}
+
+footer{border-top:1px solid var(--line);padding-block:20px;font-size:.85rem;color:var(--muted)}
+
+@media (max-width:760px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .cart-layout{grid-template-columns:1fr}
+  .admin{grid-template-columns:1fr}
+  .side{flex-direction:row;flex-wrap:wrap;padding:8px}
+  .side b{display:none}
+  .line{grid-template-columns:48px 1fr auto;gap:10px}
+  .line .mini{width:48px;height:48px}
+  .line .sub{grid-column:3;grid-row:1}
+  .line .qty{grid-column:2}
+}
+@media (prefers-reduced-motion:reduce){.fsb-fill{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="demo-strip pad">
+  <div class="inner">
+    <span>Boutique de démonstration. Rien n'est vendu, les données sont fictives.</span>
+    <span>Modules développés par <a href="../">Khalifa LO</a></span>
+  </div>
+</div>
+
+<div class="fsb pad" id="fsb-banner" data-fsb>
+  <p class="fsb-msg" data-fsb-msg>Plus que 50,00 € pour la livraison offerte</p>
+  <div class="fsb-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-fsb-track><div class="fsb-fill" data-fsb-fill style="width:0%"></div></div>
+</div>
+
+<div class="top pad">
+  <div class="inner">
+    <a class="logo" href="#boutique">Atelier <span>Nord</span></a>
+    <nav class="nav" aria-label="Navigation">
+      <a href="#boutique" data-view-link="boutique">Boutique</a>
+      <a href="#panier" data-view-link="panier">Panier <span class="cart-count" id="cart-count">0</span></a>
+      <a href="#admin" data-view-link="admin">Back-office</a>
+    </nav>
+  </div>
+</div>
+
+<main class="pad">
+  <div class="inner">
+
+    <section id="view-boutique" data-view="boutique">
+      <h1>Nos produits</h1>
+      <p class="muted">Ajoutez des produits : la barre en haut de page avance. Module « Barre livraison gratuite ».</p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section id="view-panier" data-view="panier" hidden>
+      <h1>Votre panier</h1>
+      <div class="cart-layout">
+        <div>
+          <div class="cart-fsb" data-fsb>
+            <p class="fsb-msg" data-fsb-msg>Plus que 50,00 € pour la livraison offerte</p>
+            <div class="fsb-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-fsb-track><div class="fsb-fill" data-fsb-fill style="width:0%"></div></div>
+          </div>
+          <div id="cart-lines"></div>
+        </div>
+        <aside class="summary" aria-label="Récapitulatif">
+          <div class="row"><span>Produits</span><span id="sum-products">0,00 €</span></div>
+          <div class="row"><span>Livraison</span><span id="sum-shipping">5,90 €</span></div>
+          <div class="row total"><span>Total TTC</span><span id="sum-total">5,90 €</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="view-admin" data-view="admin" hidden>
+      <h1>Back-office</h1>
+      <p class="muted">Ce que voit le marchand dans l'administration PrestaShop. Choisissez un module à gauche.</p>
+      <div class="admin">
+        <div class="side" role="group" aria-label="Modules">
+          <b>Modules</b>
+          <button type="button" id="tab-fsb" data-tab="fsb" aria-pressed="true">Barre livraison gratuite</button>
+          <button type="button" id="tab-export" data-tab="export" aria-pressed="false">Export commandes (CSV)</button>
+          <button type="button" id="tab-feed" data-tab="feed" aria-pressed="false">Flux produits (XML)</button>
+        </div>
+        <div class="panel">
+
+          <div data-panel="fsb">
+            <div class="box">
+              <h2>Réglages</h2>
+              <div class="form-row"><label for="cfg-threshold">Livraison offerte dès (TTC)</label><input id="cfg-threshold" type="number" min="1" step="1" value="50" style="width:90px"> €</div>
+              <div class="form-row"><label for="cfg-msg">Message avant le seuil</label><input id="cfg-msg" type="text" value="Plus que {amount} pour la livraison offerte" style="flex:1;min-width:200px"></div>
+              <div class="form-row"><label for="cfg-reached">Message une fois atteint</label><input id="cfg-reached" type="text" value="Bravo, la livraison est offerte !" style="flex:1;min-width:200px"></div>
+              <div class="form-row"><label for="cfg-banner">En haut de toutes les pages</label><select id="cfg-banner"><option value="1">Oui</option><option value="0">Non</option></select></div>
+              <button class="btn" type="button" id="cfg-save">Enregistrer</button>
+              <span class="ok" id="cfg-ok" hidden>Réglages enregistrés. Regardez la barre en haut de page.</span>
+            </div>
+          </div>
+
+          <div data-panel="export" hidden>
+            <div class="box">
+              <h2>Exporter les commandes</h2>
+              <div class="form-row"><label for="exp-from">Du</label><input id="exp-from" type="date" value="2026-10-01"></div>
+              <div class="form-row"><label for="exp-to">Au</label><input id="exp-to" type="date" value="2026-10-31"></div>
+              <div class="form-row"><label for="exp-state">Statut</label>
+                <select id="exp-state"><option value="">Tous les statuts</option><option>Livré</option><option>Expédié</option><option>Paiement accepté</option></select>
+              </div>
+              <button class="btn" type="button" id="exp-go">Télécharger le CSV</button>
+              <span class="muted" id="exp-count"></span>
+              <pre id="exp-out" aria-label="Contenu du fichier CSV"></pre>
+            </div>
+          </div>
+
+          <div data-panel="feed" hidden>
+            <div class="alert"><strong>URL du flux</strong><br><code>https://atelier-nord.example/module/kl_productfeed/feed?key=•••••••••••••</code></div>
+            <div class="box">
+              <h2>Réglages</h2>
+              <div class="form-row"><label for="feed-stock">Seulement en stock</label><select id="feed-stock"><option value="1">Oui</option><option value="0">Non</option></select></div>
+              <span class="muted" id="feed-count"></span>
+              <pre id="feed-out" aria-label="Contenu du flux XML"></pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="pad">
+  <div class="inner">Atelier Nord est une boutique fictive, créée pour montrer des modules PrestaShop. Développement : <a href="../">Khalifa LO</a>, SIRET 993 754 191 00019. Hébergement : GitHub Pages, GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</div>
+</footer>
+
+<script>
+(function(){
+  var fmt = new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'});
+  var SHIPPING = 5.90;
+  var cfg = {threshold:50, msg:'Plus que {amount} pour la livraison offerte', reached:'Bravo, la livraison est offerte !', banner:true};
+
+  var products = [
+    {id:12, ref:'MUG-CER-01', ean:'3760123456789', name:'Mug en céramique', desc:'Mug 33 cl, passe au lave-vaisselle.', price:14.90, stock:37, cat:'Cuisine', slug:'mug-ceramique', img:34, color:'#5E7F73'},
+    {id:18, ref:'CAR-A5-LN', ean:'3760123456796', name:'Carnet A5 ligné', desc:'96 pages, papier 90 g, couverture lin.', price:9.50, stock:0, cat:'Papeterie', slug:'carnet-a5-ligne', img:51, color:'#A98B6B'},
+    {id:23, ref:'TOTE-COT-N', ean:'3760123456802', name:'Tote bag en coton', desc:'Coton bio 280 g, anses longues.', price:19.00, stock:12, cat:'Accessoires', slug:'tote-bag-coton', img:66, color:'#7A8794'},
+    {id:31, ref:'BOUG-CED-S', ean:'3760123456819', name:'Bougie au cèdre', desc:'Cire végétale, 40 h de combustion.', price:22.00, stock:8, cat:'Maison', slug:'bougie-cedre', img:72, color:'#8C6E5A'},
+    {id:36, ref:'PLAID-LAI', ean:'3760123456826', name:'Plaid en laine', desc:'Laine d\'agneau, 130 × 170 cm.', price:59.00, stock:4, cat:'Maison', slug:'plaid-laine', img:80, color:'#4E6A7A'},
+    {id:40, ref:'TORCH-LIN', ean:'3760123456833', name:'Torchons en lin (×2)', desc:'Lin lavé, 50 × 70 cm.', price:16.50, stock:21, cat:'Cuisine', slug:'torchons-lin', img:88, color:'#9AA58E'}
+  ];
+  var cart = {12:1};
+
+  function cartTotal(){ return products.reduce(function(s,p){ return s + p.price*(cart[p.id]||0); },0); }
+  function cartCount(){ return Object.keys(cart).reduce(function(s,k){ return s + cart[k]; },0); }
+
+  /* Boutique */
+  var grid = document.getElementById('grid');
+  products.forEach(function(p){
+    var c = document.createElement('article');
+    c.className = 'card';
+    c.innerHTML =
+      '<div class="thumb" style="background:'+p.color+'">'+p.cat+'</div>'+
+      '<h2 style="font-size:1rem">'+p.name+'</h2>'+
+      '<div class="price">'+fmt.format(p.price)+'</div>'+
+      '<div class="stock'+(p.stock<=0?' out':'')+'">'+(p.stock>0?'En stock':'Rupture de stock')+'</div>'+
+      '<button class="add" type="button" id="add-'+p.id+'"'+(p.stock<=0?' disabled':'')+'>Ajouter au panier</button>';
+    grid.appendChild(c);
+    c.querySelector('.add').addEventListener('click',function(){
+      cart[p.id] = Math.min((cart[p.id]||0)+1, 9);
+      var b = this; b.textContent = 'Ajouté ✓';
+      setTimeout(function(){ b.textContent = 'Ajouter au panier'; },900);
+      render();
+    });
+  });
+
+  /* Panier */
+  function renderCart(){
+    var box = document.getElementById('cart-lines');
+    box.innerHTML = '';
+    var items = products.filter(function(p){ return cart[p.id]; });
+    if (!items.length) {
+      box.innerHTML = '<p class="empty muted">Votre panier est vide. <a href="#boutique">Retour à la boutique</a></p>';
+    }
+    items.forEach(function(p){
+      var l = document.createElement('div');
+      l.className = 'line';
+      l.innerHTML =
+        '<div class="mini" style="background:'+p.color+'"></div>'+
+        '<div><div style="font-weight:600">'+p.name+'</div><div class="muted" style="font-size:.85rem">'+fmt.format(p.price)+'</div></div>'+
+        '<div class="qty"><button type="button" id="dec-'+p.id+'" aria-label="Retirer">−</button><output>'+cart[p.id]+'</output><button type="button" id="inc-'+p.id+'" aria-label="Ajouter">+</button></div>'+
+        '<div class="sub">'+fmt.format(p.price*cart[p.id])+'</div>';
+      box.appendChild(l);
+      l.querySelector('#dec-'+p.id).addEventListener('click',function(){ cart[p.id]--; if(cart[p.id]<=0) delete cart[p.id]; render(); });
+      l.querySelector('#inc-'+p.id).addEventListener('click',function(){ cart[p.id]=Math.min(cart[p.id]+1,9); render(); });
+    });
+    var t = cartTotal(), free = t >= cfg.threshold, ship = (free || t===0) ? 0 : SHIPPING;
+    document.getElementById('sum-products').textContent = fmt.format(t);
+    var s = document.getElementById('sum-shipping');
+    s.textContent = free ? 'Offerte' : fmt.format(ship);
+    s.className = free ? 'free' : '';
+    document.getElementById('sum-total').textContent = fmt.format(t + ship);
+  }
+
+  /* Barre livraison gratuite (module 1) */
+  function renderBars(){
+    var t = cartTotal(), remaining = Math.max(0, cfg.threshold - t);
+    var percent = Math.min(100, Math.round(t / cfg.threshold * 100)), reached = remaining <= 0;
+    var msg = reached ? cfg.reached : cfg.msg.split('{amount}').join(fmt.format(remaining));
+    document.querySelectorAll('[data-fsb]').forEach(function(b){
+      b.querySelector('[data-fsb-msg]').textContent = msg;
+      b.querySelector('[data-fsb-fill]').style.width = percent + '%';
+      b.querySelector('[data-fsb-track]').setAttribute('aria-valuenow', percent);
+      b.classList.toggle('is-reached', reached);
+    });
+    document.getElementById('fsb-banner').hidden = !cfg.banner;
+  }
+
+  function render(){
+    document.getElementById('cart-count').textContent = cartCount();
+    renderBars(); renderCart();
+  }
+
+  document.getElementById('cfg-save').addEventListener('click',function(){
+    var th = parseFloat(document.getElementById('cfg-threshold').value);
+    if (!(th > 0)) { th = 50; document.getElementById('cfg-threshold').value = 50; }
+    cfg.threshold = th;
+    cfg.msg = document.getElementById('cfg-msg').value || cfg.msg;
+    cfg.reached = document.getElementById('cfg-reached').value || cfg.reached;
+    cfg.banner = document.getElementById('cfg-banner').value === '1';
+    var ok = document.getElementById('cfg-ok'); ok.hidden = false;
+    setTimeout(function(){ ok.hidden = true; },2500);
+    render();
+  });
+
+  /* Export CSV (module 2) */
+  var orders = [
+    ['XKBKNABJK','2026-10-27 18:42','Marie Durand','marie.durand@exemple.fr',64.90,'Carte bancaire','Livré'],
+    ['FFATNOMMJ','2026-10-25 10:15','Karim Benali','k.benali@exemple.fr',29.40,'PayPal','Expédié'],
+    ['UOYEVOLIL','2026-10-21 21:03','Sophie Martin','sophie.m@exemple.fr',112.00,'Carte bancaire','Livré'],
+    ['ZQHDKRSPA','2026-10-19 14:27','Lucas Petit','lucas.petit@exemple.fr',47.80,'Virement','Paiement accepté'],
+    ['MRTWLCNEB','2026-10-12 09:51','Aïcha Diallo','aicha.d@exemple.fr',19.00,'Carte bancaire','Livré'],
+    ['PLKQWEXAD','2026-09-28 16:20','Julien Roux','j.roux@exemple.fr',38.50,'PayPal','Livré']
+  ];
+  function frDate(d){ var p = d.split(' '), x = p[0].split('-'); return x[2]+'/'+x[1]+'/'+x[0]+' '+p[1]; }
+  function renderCsv(){
+    var from = document.getElementById('exp-from').value || '0000-00-00';
+    var to = document.getElementById('exp-to').value || '9999-12-31';
+    var st = document.getElementById('exp-state').value;
+    var rows = orders.filter(function(o){ var d=o[1].slice(0,10); return d>=from && d<=to && (!st || o[6]===st); });
+    var lines = ['Référence;Date;Client;Email;Total TTC;Devise;Paiement;Statut'];
+    rows.forEach(function(o){ lines.push([o[0],frDate(o[1]),o[2],o[3],o[4].toFixed(2).replace('.',','),'EUR',o[5],o[6]].join(';')); });
+    document.getElementById('exp-out').textContent = rows.length ? lines.join('\n') : 'Aucune commande sur cette période.';
+    document.getElementById('exp-count').textContent = rows.length + (rows.length>1?' commandes exportées':' commande exportée') + ' · fichier commandes_'+from+'_'+to+'.csv';
+  }
+  document.getElementById('exp-go').addEventListener('click', renderCsv);
+  ['exp-from','exp-to','exp-state'].forEach(function(id){ document.getElementById(id).addEventListener('change', renderCsv); });
+
+  /* Flux XML (module 3) */
+  function renderFeed(){
+    var only = document.getElementById('feed-stock').value === '1';
+    var list = products.filter(function(p){ return !only || p.stock > 0; });
+    var out = ['<?xml version="1.0" encoding="UTF-8"?>','<products generated="2026-10-28T20:00:00+01:00">'];
+    list.forEach(function(p){
+      out.push('  <product>',
+        '    <id>'+p.id+'</id>',
+        '    <reference>'+p.ref+'</reference>',
+        '    <ean13>'+p.ean+'</ean13>',
+        '    <title><![CDATA['+p.name+']]></title>',
+        '    <description><![CDATA['+p.desc+']]></description>',
+        '    <price>'+p.price.toFixed(2)+'</price>',
+        '    <currency>EUR</currency>',
+        '    <quantity>'+p.stock+'</quantity>',
+        '    <brand>Atelier Nord</brand>',
+        '    <category>'+p.cat+'</category>',
+        '    <url>https://atelier-nord.example/'+p.id+'-'+p.slug+'.html</url>',
+        '    <image>https://atelier-nord.example/'+p.img+'-large_default/'+p.slug+'.jpg</image>',
+        '  </product>');
+    });
+    out.push('</products>');
+    document.getElementById('feed-out').textContent = out.join('\n');
+    document.getElementById('feed-count').textContent = list.length + ' produits dans le flux' + (only ? ' (les ruptures de stock sont exclues)' : '');
+  }
+  document.getElementById('feed-stock').addEventListener('change', renderFeed);
+
+  /* Onglets du back-office */
+  document.querySelectorAll('[data-tab]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-tab]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true' : 'false'); });
+      document.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = p.getAttribute('data-panel') !== b.getAttribute('data-tab'); });
+    });
+  });
+
+  /* Navigation par #ancre */
+  function route(){
+    var v = (location.hash || '#boutique').slice(1);
+    if (['boutique','panier','admin'].indexOf(v) === -1) v = 'boutique';
+    document.querySelectorAll('[data-view]').forEach(function(s){ s.hidden = s.getAttribute('data-view') !== v; });
+    document.querySelectorAll('[data-view-link]').forEach(function(a){
+      if (a.getAttribute('data-view-link') === v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('hashchange', route);
+
+  route(); render(); renderCsv(); renderFeed();
+})();
+</script>
+</body>
+</html>
